@@ -8,12 +8,18 @@
     <link rel="stylesheet" href="styles.css" />
     <title>Hangman</title>
   </head>
-  <body>
+  <body onload="displayHint()">
     <div id="hangmanContainer">
-      <div id="hangmanDisplay"></div>
-      <div id="hintDisplay">
-        <ul id="hintList"></ul>
+      <div id="hangmanDisplay">
+        <img id="img4" src="/hangman/4.jpg" />
+        <img id="img5" src="/hangman/5.jpg" />
+        <img id="img6" src="/hangman/6.jpg" />
+        <img id="img7" src="/hangman/7.jpg" />
+        <img id="img8" src="/hangman/8.jpg" />
+        <img id="img9" src="/hangman/9.jpg" />
+        <img id="img10" src="/hangman/10.jpg" />
       </div>
+      <div id="hintDisplay"></div>
       <div id="letterButtons">
         <button onclick="inputLetter(this.innerHTML)" id="a">a</button>
         <button onclick="inputLetter(this.innerHTML)" id="b">b</button>

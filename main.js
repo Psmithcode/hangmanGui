@@ -1,12 +1,6 @@
 // const prompt = require("prompt-sync")({ sigint: true });
-const inputLetter = (button) => {
-  var guess = button;
-  console.log(guess);
-  hangman(guess);
-  makeHint(guess);
-};
 
-let hintList = document.getElementById("hintList");
+// let hintList = document.getElementById("hintList");
 
 // hint.forEach((item)=>{
 //   let li = document.createElement("li");
@@ -18,13 +12,13 @@ const printHint = () => {
   console.log(hint);
 };
 
-const button = document.querySelectorAll("button");
+let hintDisplay = document.getElementById("hintDisplay");
 
-// button.addEventListener("click", inputLetter());
+// const button = document.querySelectorAll("button");
 
 // Inital amount of lives/tries is 5
 
-let lives = 5;
+let lives = 6;
 
 // This is the word bank that we will pull the solution from
 
@@ -65,6 +59,14 @@ let words = [
 
 const solution = words[Math.floor(Math.random() * words.length)];
 
+const inputLetter = (button) => {
+  var guess = button;
+  console.log(guess);
+  hangman(guess);
+  document.getElementById("hintDisplay").innerText = "";
+  document.getElementById("hintDisplay").innerText = hint.join("");
+  checkforwin();
+};
 // To start, hint will be an empty array
 
 let hint = [];
@@ -73,15 +75,21 @@ let hint = [];
 
 const makeHint = (solution) => {
   for (let i = 0; i < solution.length; i++) {
-    hint = [];
-    hint[i] = "_";
-    let list = document.createElement("li");
-    list.innerText = hint[i];
-    document.querySelector("#hintList").appendChild(list);
+    hint.push("_");
+    // let hintDisplay = document.createElement("p");
+    // hintDisplay.innerText = hint;
+    // document.querySelector("#hintDisplay").appendChild(hintDisplay);
   }
+  console.log(hint);
   return hint;
 };
+makeHint(solution);
 
+const displayHint = (hint) => {
+  if (hintDisplay.childNodes.length === 0) {
+    document.getElementById("hintDisplay").innerText = "Guess to start!";
+  }
+};
 // This will take in our input and loop through the solution to see if it includes our input
 
 const takeGuess = (guess) => {
@@ -96,6 +104,47 @@ const takeGuess = (guess) => {
   if (!hint.includes(guess)) {
     lives--;
     console.log(`You have ${lives} lives left.`);
+    if (lives === 5) {
+      document.getElementById("img4").style.visibility = "hidden";
+      document.getElementById("img5").style.visibility = "visible";
+      document.getElementById("img6").style.visibility = "hidden";
+      document.getElementById("img7").style.visibility = "hidden";
+      document.getElementById("img8").style.visibility = "hidden";
+      document.getElementById("img9").style.visibility = "hidden";
+      document.getElementById("img10").style.visibility = "hidden";
+    } else if (lives === 4) {
+      document.getElementById("img4").style.visibility = "hidden";
+      document.getElementById("img5").style.visibility = "hidden";
+      document.getElementById("img6").style.visibility = "visible";
+      document.getElementById("img7").style.visibility = "hidden";
+      document.getElementById("img8").style.visibility = "hidden";
+      document.getElementById("img9").style.visibility = "hidden";
+      document.getElementById("img10").style.visibility = "hidden";
+    } else if (lives === 3) {
+      document.getElementById("img4").style.visibility = "hidden";
+      document.getElementById("img5").style.visibility = "hidden";
+      document.getElementById("img6").style.visibility = "hidden";
+      document.getElementById("img7").style.visibility = "visible";
+      document.getElementById("img8").style.visibility = "hidden";
+      document.getElementById("img9").style.visibility = "hidden";
+      document.getElementById("img10").style.visibility = "hidden";
+    } else if (lives === 2) {
+      document.getElementById("img4").style.visibility = "hidden";
+      document.getElementById("img5").style.visibility = "hidden";
+      document.getElementById("img6").style.visibility = "hidden";
+      document.getElementById("img7").style.visibility = "hidden";
+      document.getElementById("img8").style.visibility = "visible";
+      document.getElementById("img9").style.visibility = "hidden";
+      document.getElementById("img10").style.visibility = "hidden";
+    } else if (lives === 1) {
+      document.getElementById("img4").style.visibility = "hidden";
+      document.getElementById("img5").style.visibility = "hidden";
+      document.getElementById("img6").style.visibility = "hidden";
+      document.getElementById("img7").style.visibility = "hidden";
+      document.getElementById("img8").style.visibility = "hidden";
+      document.getElementById("img9").style.visibility = "visible";
+      document.getElementById("img10").style.visibility = "hidden";
+    }
   }
   return hint;
 };
@@ -104,22 +153,39 @@ const takeGuess = (guess) => {
 
 const checkforwin = () => {
   if (hint.join("") === solution) {
-    console.log("You win!!");
+    window.alert("You win!!");
     return true;
   } else if (lives === 0) {
-    console.log("You've been hung");
+    document.getElementById("img4").style.visibility = "hidden";
+    document.getElementById("img5").style.visibility = "hidden";
+    document.getElementById("img6").style.visibility = "hidden";
+    document.getElementById("img7").style.visibility = "hidden";
+    document.getElementById("img8").style.visibility = "hidden";
+    document.getElementById("img9").style.visibility = "hidden";
+    document.getElementById("img10").style.visibility = "visible";
+    window.alert("You've been hung");
     return true;
   }
   return false;
 };
 
-makeHint(solution);
+// makeHint(solution);
 
 // This is the general game function
 
 const hangman = (guess) => {
   takeGuess(guess);
 };
+
+if (lives === 5) {
+  document.getElementById("img5").style.visibility = "visible";
+  document.getElementById("img4").style.visibility = "hidden";
+  document.getElementById("img6").style.visibility = "hidden";
+  document.getElementById("img7").style.visibility = "hidden";
+  document.getElementById("img8").style.visibility = "hidden";
+  document.getElementById("img9").style.visibility = "hidden";
+  document.getElementById("img10").style.visibility = "hidden";
+}
 
 // This keeps the game running while the win and loss conditions have not been met
 
